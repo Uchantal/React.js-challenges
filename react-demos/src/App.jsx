@@ -8,7 +8,9 @@ const App = () => {
   const [friends, setFriends] = useState(["Chantal", "Peace"]);
   const addOneFriend = () => setFriends([...friends, "Josiane"]);
   const removeFriend = () => setFriends(friends.filter(f => f !=='Josiane '));
-
+  const updateFriend= () => {
+    setFriends(friends.map(f => f ==='Josiane' ? 'Peace Josiane': f));
+  }
   return ( // Added parentheses here!
     <div>
       <section>
@@ -21,6 +23,7 @@ const App = () => {
       <button onClick={decrement}>-</button>
       <button onClick={addOneFriend}>Add New Friend</button>
       <button onClick={removeFriend}>Remove a Friend</button>
+      <button onClick={updateFriend}>Update friends</button>
     </div>
   ); // Closing parenthesis for the return statement
 };
