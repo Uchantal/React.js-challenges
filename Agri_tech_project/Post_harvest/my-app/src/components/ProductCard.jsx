@@ -1,7 +1,15 @@
 import { Link } from "react-router-dom"
 import { Calendar, MapPin } from "lucide-react"
+import { useState } from "react"
 
 export default function ProductCard({ product }) {
+  const [showContactInfo, setShowContactInfo] = useState(false)
+
+  const handleContactFarmer = () => {
+    // In a real app, this would open a chat window or contact form
+    setShowContactInfo(!showContactInfo)
+  }
+
   return (
     <div className="overflow-hidden rounded-lg border border-gray-200 bg-white shadow">
       <div className="relative h-48">
@@ -26,6 +34,13 @@ export default function ProductCard({ product }) {
           </div>
           <p className="text-sm">Available: {product.quantity}</p>
         </div>
+        {showContactInfo && (
+          <div className="mt-4 p-3 bg-gray-50 rounded-md">
+            <p className="text-sm font-medium">Farmer Contact Info:</p>
+            <p className="text-sm text-gray-600">Email: farmer@example.com</p>
+            <p className="text-sm text-gray-600">Phone: +250 123 456 789</p>
+          </div>
+        )}
         <div className="flex gap-2 mt-4">
           <Link
             to={`/products/${product.id}`}
@@ -33,8 +48,11 @@ export default function ProductCard({ product }) {
           >
             View Details
           </Link>
-          <button className="flex-1 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">
-            Contact Farmer
+          <button 
+            className="flex-1 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700"
+            onClick={handleContactFarmer}
+          >
+            {showContactInfo ? 'Hide Contact' : 'Contact Farmer'}
           </button>
         </div>
       </div>
