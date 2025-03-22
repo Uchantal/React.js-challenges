@@ -39,8 +39,49 @@ const mockProducts = [
   },
 ]
 
+// Mock data for orders
+const mockOrders = {
+  "1234": {
+    id: "1234",
+    product: "Organic Potatoes",
+    quantity: "200kg",
+    buyer: "Kigali Foods Ltd",
+    status: "Pending",
+    orderDate: "2025-01-15",
+    deliveryDate: "2025-01-20",
+    totalPrice: "40,000 RWF",
+    deliveryAddress: "KK 123 St, Kigali",
+    paymentStatus: "Awaiting Payment"
+  },
+  "1233": {
+    id: "1233",
+    product: "Fresh Maize",
+    quantity: "300kg",
+    buyer: "Rwanda Grains Co.",
+    status: "In Transit",
+    orderDate: "2025-01-12",
+    deliveryDate: "2025-01-17",
+    totalPrice: "45,000 RWF",
+    deliveryAddress: "HY 456 St, Huye",
+    paymentStatus: "Paid"
+  },
+  "1232": {
+    id: "1232",
+    product: "Premium Rice",
+    quantity: "100kg",
+    buyer: "Huye Restaurant",
+    status: "Completed",
+    orderDate: "2025-01-10",
+    deliveryDate: "2025-01-15",
+    totalPrice: "30,000 RWF",
+    deliveryAddress: "MS 789 St, Musanze",
+    paymentStatus: "Paid"
+  }
+}
+
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState("overview")
+  const [selectedOrder, setSelectedOrder] = useState(null)
   const navigate = useNavigate()
 
   const handleFindMoreStorage = () => {
@@ -48,8 +89,11 @@ export default function Dashboard() {
   }
 
   const handleViewOrderDetails = (orderId) => {
-    // In a real app, this would navigate to a specific order details page
-    navigate(`/orders/${orderId}`)
+    const order = mockOrders[orderId]
+    if (order) {
+      setSelectedOrder(order)
+      setActiveTab("orderDetails")
+    }
   }
 
   return (
@@ -282,6 +326,81 @@ export default function Dashboard() {
                 >
                   View Details
                 </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {activeTab === "orderDetails" && selectedOrder && (
+        <div className="bg-white p-6 rounded-lg border border-gray-200 shadow">
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-lg font-semibold">Order Details</h2>
+            <button
+              onClick={() => {
+                setActiveTab("orders")
+                setSelectedOrder(null)
+              }}
+              className="text-sm text-gray-500 hover:text-gray-700"
+            >
+              Back to Orders
+            </button>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <h3 className="font-medium mb-4">Order Information</h3>
+              <div className="space-y-2">
+                <div className="flex justify-between">
+                  <span className="text-gray-500">Order ID:</span>
+                  <span className="font-medium">#{selectedOrder.id}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-500">Product:</span>
+                  <span>{selectedOrder.product}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-500">Quantity:</span>
+                  <span>{selectedOrder.quantity}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-500">Total Price:</span>
+                  <span>{selectedOrder.totalPrice}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-500">Status:</span>
+                  <span className={`px-2 py-1 rounded text-sm ${
+                    selectedOrder.status === "Pending" ? "bg-yellow-100 text-yellow-800" :
+                    selectedOrder.status === "In Transit" ? "bg-blue-100 text-blue-800" :
+                    "bg-green-100 text-green-800"
+                  }`}>{selectedOrder.status}</span>
+                </div>
+              </div>
+            </div>
+            <div>
+              <h3 className="font-medium mb-4">Delivery Information</h3>
+              <div className="space-y-2">
+                <div className="flex justify-between">
+                  <span className="text-gray-500">Buyer:</span>
+                  <span>{selectedOrder.buyer}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-500">Delivery Address:</span>
+                  <span>{selectedOrder.deliveryAddress}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-500">Order Date:</span>
+                  <span>{selectedOrder.orderDate}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-500">Delivery Date:</span>
+                  <span>{selectedOrder.deliveryDate}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-500">Payment Status:</span>
+                  <span className={`px-2 py-1 rounded text-sm ${
+                    selectedOrder.paymentStatus === "Paid" ? "bg-green-100 text-green-800" : "bg-yellow-100 text-yellow-800"
+                  }`}>{selectedOrder.paymentStatus}</span>
+                </div>
               </div>
             </div>
           </div>

@@ -8,6 +8,7 @@ import { useAuth } from "../context/AuthContext"
 export default function AdminDashboard() {
   const { user } = useAuth()
   const [activeTab, setActiveTab] = useState("overview")
+  const [selectedUser, setSelectedUser] = useState(null)
   const navigate = useNavigate()
 
   // Mock data for admin dashboard
@@ -28,7 +29,6 @@ export default function AdminDashboard() {
   ]
 
   const handleAddNewUser = () => {
-    // In a real app, this would open a modal or navigate to a user creation form
     navigate('/admin/users/new')
   }
 
@@ -42,6 +42,21 @@ export default function AdminDashboard() {
 
   const handleManageTransportServices = () => {
     navigate('/admin/transport-services')
+  }
+
+  const handleViewUser = (userId) => {
+    const user = recentUsers.find(u => u.id === userId)
+    if (user) {
+      setSelectedUser(user)
+      setActiveTab("userDetails")
+    }
+  }
+
+  const handleDeleteUser = (userId) => {
+    // In a real app, this would make an API call to delete the user
+    if (confirm("Are you sure you want to delete this user?")) {
+      alert("User deleted successfully")
+    }
   }
 
   return (
@@ -205,12 +220,18 @@ export default function AdminDashboard() {
                         {new Date(user.date).toLocaleDateString()}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                        <a href="#" className="text-green-600 hover:text-green-900 mr-3">
+                        <button 
+                          onClick={() => handleViewUser(user.id)}
+                          className="text-green-600 hover:text-green-900 mr-3"
+                        >
                           View
-                        </a>
-                        <a href="#" className="text-red-600 hover:text-red-900">
+                        </button>
+                        <button 
+                          onClick={() => handleDeleteUser(user.id)}
+                          className="text-red-600 hover:text-red-900"
+                        >
                           Delete
-                        </a>
+                        </button>
                       </td>
                     </tr>
                   ))}
@@ -308,6 +329,61 @@ export default function AdminDashboard() {
           </p>
           <div className="bg-gray-100 p-12 rounded-lg flex items-center justify-center">
             <p className="text-gray-500">User management interface would be implemented here</p>
+          </div>
+        </div>
+      )}
+
+      {activeTab === "userDetails" && selectedUser && (
+        <div className="bg-white p-6 rounded-lg border border-gray-200 shadow">
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-lg font-semibold">User Details</h2>
+            <button
+              onClick={() => {
+                setActiveTab("users")
+                setSelectedUser(null)
+              }}
+              className="text-sm text-gray-500 hover:text-gray-700"
+            >
+              Back to Users
+            </button>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <h3 className="font-medium mb-4">Basic Information</h3>
+              <div className="space-y-2">
+                <div className="flex justify-between">
+                  <span className="text-gray-500">Name:</span>
+                  <span>{selectedUser.name}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-500">Email:</span>
+                  <span>{selectedUser.email}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-500">Role:</span>
+                  <span className={`px-2 py-1 rounded text-sm ${
+                    selectedUser.role === "farmer" ? "bg-green-100 text-green-800" :
+                    selectedUser.role === "buyer" ? "bg-blue-100 text-blue-800" :
+                    "bg-purple-100 text-purple-800"
+                  }`}>{selectedUser.role}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-500">Join Date:</span>
+                  <span>{new Date(selectedUser.date).toLocaleDateString()}</span>
+                </div>
+              </div>
+            </div>
+            <div>
+              <h3 className="font-medium mb-4">Actions</h3>
+              <div className="space-y-2">
+                <button 
+                  onClick={() => handleDeleteUser(selectedUser.id)}
+                  className="w-full px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700"
+                >
+                  Delete User
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       )}

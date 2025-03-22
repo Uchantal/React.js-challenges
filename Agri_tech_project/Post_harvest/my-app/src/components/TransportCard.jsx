@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import { MapPin, Weight } from "lucide-react"
+import { MapPin, Truck } from "lucide-react"
 import { useState } from "react"
 
 export default function TransportCard({ service }) {
@@ -25,8 +25,8 @@ export default function TransportCard({ service }) {
 
   const handleSubmitBooking = (e) => {
     e.preventDefault()
-    // In a real app, this would send the booking data to an API
-    alert("Transport booking request submitted successfully!")
+    // In a real app, this would make an API call to submit the booking
+    alert(`Transport booked successfully!\nPickup Date: ${bookingData.pickupDate}\nPickup Location: ${bookingData.pickupLocation}\nDropoff Location: ${bookingData.dropoffLocation}\nCargo Weight: ${bookingData.cargoWeight} kg`)
     setShowBookingForm(false)
     setBookingData({
       pickupDate: "",
@@ -43,35 +43,33 @@ export default function TransportCard({ service }) {
           <h3 className="text-xl font-bold">{service.name}</h3>
           <span
             className={`text-xs px-2 py-1 rounded-full ${
-              service.availability === "Available" ? "bg-green-100 text-green-800" : "bg-yellow-100 text-yellow-800"
+              service.availability === "Available"
+                ? "bg-green-100 text-green-800"
+                : "bg-yellow-100 text-yellow-800"
             }`}
           >
             {service.availability}
           </span>
         </div>
-        <p className="text-sm text-gray-500">{service.vehicleType}</p>
-
-        <div className="space-y-2 mt-4">
+        <p className="text-gray-500 mt-1">{service.vehicleType}</p>
+        <div className="space-y-2 mt-2">
           <div className="flex items-center text-sm text-gray-500">
             <MapPin className="h-4 w-4 mr-1" />
             {service.location}
           </div>
           <div className="flex items-center text-sm text-gray-500">
-            <Weight className="h-4 w-4 mr-1" />
+            <Truck className="h-4 w-4 mr-1" />
             Capacity: {service.capacity}
           </div>
-          <p className="text-sm font-medium">Price: {service.price}</p>
-
-          <div className="mt-2">
-            <p className="text-sm font-medium">Routes:</p>
-            <ul className="text-sm text-gray-500 list-disc list-inside">
-              {service.routes.map((route, index) => (
-                <li key={index}>{route}</li>
-              ))}
-            </ul>
+          <div className="flex justify-between items-center">
+            <span className="text-sm">Routes: {service.routes.join(", ")}</span>
+            <span className="font-bold text-green-600">{service.price}</span>
           </div>
+        </div>
 
-          <div className="flex flex-wrap gap-1 mt-2">
+        <div className="mt-4">
+          <h4 className="text-sm font-medium mb-2">Features:</h4>
+          <div className="flex flex-wrap gap-2">
             {service.features.map((feature, index) => (
               <span key={index} className="text-xs bg-gray-100 px-2 py-1 rounded-full">
                 {feature}
@@ -81,7 +79,7 @@ export default function TransportCard({ service }) {
         </div>
 
         {showBookingForm && (
-          <form onSubmit={handleSubmitBooking} className="mt-4 space-y-3 border-t pt-4">
+          <form onSubmit={handleSubmitBooking} className="mt-4 space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-700">Pickup Date</label>
               <input
@@ -100,7 +98,6 @@ export default function TransportCard({ service }) {
                 name="pickupLocation"
                 value={bookingData.pickupLocation}
                 onChange={handleInputChange}
-                placeholder="Enter pickup location"
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm"
                 required
               />
@@ -112,7 +109,6 @@ export default function TransportCard({ service }) {
                 name="dropoffLocation"
                 value={bookingData.dropoffLocation}
                 onChange={handleInputChange}
-                placeholder="Enter dropoff location"
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm"
                 required
               />

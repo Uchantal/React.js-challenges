@@ -4,19 +4,18 @@ import { useState, useEffect } from "react"
 import { Link, useParams } from "react-router-dom"
 import { Calendar, MapPin, ArrowLeft, User, Phone, Mail } from "lucide-react"
 
-// Mock data for demonstration
+// Mock data for demonstration - matching IDs with Products page
 const mockProducts = [
   {
-    id: "1",
+    id: 1,
     name: "Premium Rice",
     category: "Grains",
     quantity: "500 kg",
     price: "300 RWF/kg",
     location: "Kigali, Rwanda",
     harvestDate: "2025-01-10",
-    image: "/placeholder.svg?height=400&width=600",
-    description:
-      "High-quality premium rice grown using organic farming methods. This rice has excellent cooking qualities with a pleasant aroma and taste. Ideal for both home cooking and restaurant use.",
+    image: "/images/premium rice.jpg",
+    description: "High-quality premium rice grown using organic farming methods. This rice has excellent cooking qualities with a pleasant aroma and taste. Ideal for both home cooking and restaurant use.",
     farmer: {
       name: "Jean Mugabo",
       phone: "+250 7XX XXX XXX",
@@ -33,16 +32,15 @@ const mockProducts = [
     ],
   },
   {
-    id: "2",
+    id: 2,
     name: "Organic Potatoes",
     category: "Vegetables",
     quantity: "300 kg",
     price: "200 RWF/kg",
     location: "Musanze, Rwanda",
     harvestDate: "2025-01-15",
-    image: "/placeholder.svg?height=400&width=600",
-    description:
-      "Fresh organic potatoes from the volcanic soil of Musanze. These potatoes are known for their excellent taste and texture. Perfect for a variety of dishes including fries, mashed potatoes, and stews.",
+    image: "/images/potatoes-harvesting-2400.jpg",
+    description: "Fresh organic potatoes from the volcanic soil of Musanze. These potatoes are known for their excellent taste and texture. Perfect for a variety of dishes including fries, mashed potatoes, and stews.",
     farmer: {
       name: "Marie Uwase",
       phone: "+250 7XX XXX XXX",
@@ -58,6 +56,56 @@ const mockProducts = [
       { name: "Packaging", value: "Available in 10kg, 25kg bags" },
     ],
   },
+  {
+    id: 3,
+    name: "Fresh Maize",
+    category: "Grains",
+    quantity: "1000 kg",
+    price: "150 RWF/kg",
+    location: "Huye, Rwanda",
+    harvestDate: "2025-01-05",
+    image: "/images/Fresh maize.jpg",
+    description: "Fresh maize harvested at the perfect time for maximum sweetness and nutrition. Ideal for both human consumption and animal feed.",
+    farmer: {
+      name: "Patrick Habimana",
+      phone: "+250 7XX XXX XXX",
+      email: "patrick.h@example.com",
+      rating: 4.7,
+      reviews: 31,
+    },
+    specifications: [
+      { name: "Variety", value: "Sweet Corn" },
+      { name: "Cultivation Method", value: "Traditional" },
+      { name: "Moisture Content", value: "14-16%" },
+      { name: "Grade", value: "A" },
+      { name: "Packaging", value: "Available in 50kg bags" },
+    ],
+  },
+  {
+    id: 4,
+    name: "Organic Tomatoes",
+    category: "Vegetables",
+    quantity: "200 kg",
+    price: "350 RWF/kg",
+    location: "Rubavu, Rwanda",
+    harvestDate: "2025-01-18",
+    image: "/images/Tomatoes.jpg",
+    description: "Fresh, organically grown tomatoes perfect for salads, cooking, and sauce making. Grown with care to ensure the best taste and nutritional value.",
+    farmer: {
+      name: "Alice Mukamana",
+      phone: "+250 7XX XXX XXX",
+      email: "alice.m@example.com",
+      rating: 4.9,
+      reviews: 27,
+    },
+    specifications: [
+      { name: "Variety", value: "Roma Tomatoes" },
+      { name: "Cultivation Method", value: "Organic" },
+      { name: "Size", value: "Medium" },
+      { name: "Grade", value: "Premium" },
+      { name: "Packaging", value: "5kg, 10kg boxes" },
+    ],
+  }
 ]
 
 export default function ProductDetail() {
@@ -73,12 +121,12 @@ export default function ProductDetail() {
   })
 
   useEffect(() => {
-    // Simulate API call
-    setTimeout(() => {
-      const foundProduct = mockProducts.find((p) => p.id === id)
-      setProduct(foundProduct)
-      setLoading(false)
-    }, 500)
+    // Convert id to number since useParams returns a string
+    const productId = parseInt(id)
+    // Find product in mock data
+    const foundProduct = mockProducts.find(p => p.id === productId)
+    setProduct(foundProduct)
+    setLoading(false)
   }, [id])
 
   const handleContactFarmer = () => {
@@ -100,7 +148,7 @@ export default function ProductDetail() {
   const handleSubmitOrder = (e) => {
     e.preventDefault()
     // In a real app, this would send the order data to an API
-    alert("Order placed successfully!")
+    alert(`Order placed successfully!\nQuantity: ${orderData.quantity}kg\nDelivery Address: ${orderData.deliveryAddress}\nDelivery Date: ${orderData.deliveryDate}`)
     setShowOrderForm(false)
     setOrderData({
       quantity: "",
@@ -157,7 +205,7 @@ export default function ProductDetail() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
           <div className="bg-white p-4 rounded-lg shadow-md">
-            <img src={product.image || "/placeholder.svg"} alt={product.name} className="w-full h-auto rounded-lg" />
+            <img src={product.image} alt={product.name} className="w-full h-auto rounded-lg" />
           </div>
 
           <div className="space-y-4">
@@ -218,6 +266,7 @@ export default function ProductDetail() {
                     name="deliveryDate"
                     value={orderData.deliveryDate}
                     onChange={handleInputChange}
+                    min={new Date().toISOString().split('T')[0]}
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm"
                     required
                   />

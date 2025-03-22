@@ -24,8 +24,8 @@ export default function StorageCard({ facility }) {
 
   const handleSubmitBooking = (e) => {
     e.preventDefault()
-    // In a real app, this would send the booking data to an API
-    alert("Booking request submitted successfully!")
+    // In a real app, this would make an API call to submit the booking
+    alert(`Storage booked successfully!\nStart Date: ${bookingData.startDate}\nDuration: ${bookingData.duration} days\nQuantity: ${bookingData.quantity} kg`)
     setShowBookingForm(false)
     setBookingData({
       startDate: "",
@@ -41,15 +41,16 @@ export default function StorageCard({ facility }) {
           <h3 className="text-xl font-bold">{facility.name}</h3>
           <span
             className={`text-xs px-2 py-1 rounded-full ${
-              facility.availability === "Available" ? "bg-green-100 text-green-800" : "bg-yellow-100 text-yellow-800"
+              facility.availability === "Available"
+                ? "bg-green-100 text-green-800"
+                : "bg-yellow-100 text-yellow-800"
             }`}
           >
             {facility.availability}
           </span>
         </div>
-        <p className="text-sm text-gray-500">{facility.type}</p>
-
-        <div className="space-y-2 mt-4">
+        <p className="text-gray-500 mt-1">{facility.type}</p>
+        <div className="space-y-2 mt-2">
           <div className="flex items-center text-sm text-gray-500">
             <MapPin className="h-4 w-4 mr-1" />
             {facility.location}
@@ -58,10 +59,15 @@ export default function StorageCard({ facility }) {
             <Thermometer className="h-4 w-4 mr-1" />
             {facility.temperature}
           </div>
-          <p className="text-sm">Capacity: {facility.capacity}</p>
-          <p className="text-sm font-medium">Price: {facility.price}</p>
+          <div className="flex justify-between items-center">
+            <span className="text-sm">Capacity: {facility.capacity}</span>
+            <span className="font-bold text-green-600">{facility.price}</span>
+          </div>
+        </div>
 
-          <div className="flex flex-wrap gap-1 mt-2">
+        <div className="mt-4">
+          <h4 className="text-sm font-medium mb-2">Features:</h4>
+          <div className="flex flex-wrap gap-2">
             {facility.features.map((feature, index) => (
               <span key={index} className="text-xs bg-gray-100 px-2 py-1 rounded-full">
                 {feature}
@@ -71,7 +77,7 @@ export default function StorageCard({ facility }) {
         </div>
 
         {showBookingForm && (
-          <form onSubmit={handleSubmitBooking} className="mt-4 space-y-3 border-t pt-4">
+          <form onSubmit={handleSubmitBooking} className="mt-4 space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-700">Start Date</label>
               <input
