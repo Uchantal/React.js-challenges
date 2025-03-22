@@ -1,7 +1,39 @@
 import { Link } from "react-router-dom"
 import { MapPin, Thermometer } from "lucide-react"
+import { useState } from "react"
 
 export default function StorageCard({ facility }) {
+  const [showBookingForm, setShowBookingForm] = useState(false)
+  const [bookingData, setBookingData] = useState({
+    startDate: "",
+    duration: "",
+    quantity: ""
+  })
+
+  const handleBookStorage = () => {
+    setShowBookingForm(!showBookingForm)
+  }
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target
+    setBookingData(prev => ({
+      ...prev,
+      [name]: value
+    }))
+  }
+
+  const handleSubmitBooking = (e) => {
+    e.preventDefault()
+    // In a real app, this would send the booking data to an API
+    alert("Booking request submitted successfully!")
+    setShowBookingForm(false)
+    setBookingData({
+      startDate: "",
+      duration: "",
+      quantity: ""
+    })
+  }
+
   return (
     <div className="overflow-hidden rounded-lg border border-gray-200 bg-white shadow">
       <div className="p-4">
@@ -38,6 +70,52 @@ export default function StorageCard({ facility }) {
           </div>
         </div>
 
+        {showBookingForm && (
+          <form onSubmit={handleSubmitBooking} className="mt-4 space-y-3 border-t pt-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Start Date</label>
+              <input
+                type="date"
+                name="startDate"
+                value={bookingData.startDate}
+                onChange={handleInputChange}
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Duration (days)</label>
+              <input
+                type="number"
+                name="duration"
+                value={bookingData.duration}
+                onChange={handleInputChange}
+                min="1"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Quantity (kg)</label>
+              <input
+                type="number"
+                name="quantity"
+                value={bookingData.quantity}
+                onChange={handleInputChange}
+                min="1"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm"
+                required
+              />
+            </div>
+            <button
+              type="submit"
+              className="w-full px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700"
+            >
+              Submit Booking
+            </button>
+          </form>
+        )}
+
         <div className="flex gap-2 mt-4">
           <Link
             to={`/storage/${facility.id}`}
@@ -45,8 +123,11 @@ export default function StorageCard({ facility }) {
           >
             View Details
           </Link>
-          <button className="flex-1 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">
-            Book Storage
+          <button 
+            className="flex-1 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700"
+            onClick={handleBookStorage}
+          >
+            {showBookingForm ? 'Cancel Booking' : 'Book Storage'}
           </button>
         </div>
       </div>

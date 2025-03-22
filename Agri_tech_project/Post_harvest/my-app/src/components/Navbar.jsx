@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Link, useLocation } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 import { Leaf, Menu, X, User, LogOut } from "lucide-react"
 import { useAuth } from "../context/AuthContext"
 
@@ -42,6 +42,7 @@ export default function Navbar() {
   const location = useLocation()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const { isAuthenticated, user, logout } = useAuth()
+  const navigate = useNavigate()
 
   // Close mobile menu when pathname changes
   useEffect(() => {
@@ -52,6 +53,14 @@ export default function Navbar() {
     logout()
     // Redirect to home page after logout
     window.location.href = "/"
+  }
+
+  const handleLogin = () => {
+    navigate('/login')
+  }
+
+  const handleRegister = () => {
+    navigate('/register')
   }
 
   // Filter routes based on authentication status
@@ -96,11 +105,17 @@ export default function Navbar() {
             </div>
           ) : (
             <>
-              <button className="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-100">
-                <Link to="/login">Login</Link>
+              <button 
+                className="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-100"
+                onClick={handleLogin}
+              >
+                Login
               </button>
-              <button className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">
-                <Link to="/register">Register</Link>
+              <button 
+                className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700"
+                onClick={handleRegister}
+              >
+                Register
               </button>
             </>
           )}
@@ -154,11 +169,17 @@ export default function Navbar() {
                     </>
                   ) : (
                     <>
-                      <button className="w-full px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-100">
-                        <Link to="/login">Login</Link>
+                      <button 
+                        className="w-full px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-100"
+                        onClick={handleLogin}
+                      >
+                        Login
                       </button>
-                      <button className="w-full px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">
-                        <Link to="/register">Register</Link>
+                      <button 
+                        className="w-full px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700"
+                        onClick={handleRegister}
+                      >
+                        Register
                       </button>
                     </>
                   )}

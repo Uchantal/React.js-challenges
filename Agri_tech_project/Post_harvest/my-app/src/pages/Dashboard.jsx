@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { BarChart3, Package, Plus, ShoppingCart, Truck } from "lucide-react"
 import ProductCard from "../components/ProductCard"
 
@@ -41,6 +41,16 @@ const mockProducts = [
 
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState("overview")
+  const navigate = useNavigate()
+
+  const handleFindMoreStorage = () => {
+    navigate('/storage')
+  }
+
+  const handleViewOrderDetails = (orderId) => {
+    // In a real app, this would navigate to a specific order details page
+    navigate(`/orders/${orderId}`)
+  }
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -211,7 +221,7 @@ export default function Dashboard() {
                 <span>0 kg available</span>
               </div>
             </div>
-            <button className="w-full px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-100 mt-4">
+            <button className="w-full px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-100 mt-4" onClick={handleFindMoreStorage}>
               Find More Storage
             </button>
           </div>
@@ -232,7 +242,10 @@ export default function Dashboard() {
               <p className="text-sm text-gray-500 mb-2">Buyer: Kigali Foods Ltd</p>
               <div className="flex justify-between text-xs">
                 <span>Order Date: Jan 15, 2025</span>
-                <button className="px-2 py-1 border border-gray-300 rounded text-xs hover:bg-gray-200">
+                <button 
+                  className="px-2 py-1 border border-gray-300 rounded text-xs hover:bg-gray-200"
+                  onClick={() => handleViewOrderDetails('1234')}
+                >
                   View Details
                 </button>
               </div>
@@ -246,7 +259,10 @@ export default function Dashboard() {
               <p className="text-sm text-gray-500 mb-2">Buyer: Rwanda Grains Co.</p>
               <div className="flex justify-between text-xs">
                 <span>Order Date: Jan 12, 2025</span>
-                <button className="px-2 py-1 border border-gray-300 rounded text-xs hover:bg-gray-200">
+                <button 
+                  className="px-2 py-1 border border-gray-300 rounded text-xs hover:bg-gray-200"
+                  onClick={() => handleViewOrderDetails('1233')}
+                >
                   View Details
                 </button>
               </div>
@@ -260,7 +276,10 @@ export default function Dashboard() {
               <p className="text-sm text-gray-500 mb-2">Buyer: Huye Restaurant</p>
               <div className="flex justify-between text-xs">
                 <span>Order Date: Jan 10, 2025</span>
-                <button className="px-2 py-1 border border-gray-300 rounded text-xs hover:bg-gray-200">
+                <button 
+                  className="px-2 py-1 border border-gray-300 rounded text-xs hover:bg-gray-200"
+                  onClick={() => handleViewOrderDetails('1232')}
+                >
                   View Details
                 </button>
               </div>

@@ -64,6 +64,13 @@ export default function ProductDetail() {
   const { id } = useParams()
   const [product, setProduct] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [showContactInfo, setShowContactInfo] = useState(false)
+  const [showOrderForm, setShowOrderForm] = useState(false)
+  const [orderData, setOrderData] = useState({
+    quantity: "",
+    deliveryAddress: "",
+    deliveryDate: ""
+  })
 
   useEffect(() => {
     // Simulate API call
@@ -73,6 +80,34 @@ export default function ProductDetail() {
       setLoading(false)
     }, 500)
   }, [id])
+
+  const handleContactFarmer = () => {
+    setShowContactInfo(!showContactInfo)
+  }
+
+  const handlePlaceOrder = () => {
+    setShowOrderForm(!showOrderForm)
+  }
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target
+    setOrderData(prev => ({
+      ...prev,
+      [name]: value
+    }))
+  }
+
+  const handleSubmitOrder = (e) => {
+    e.preventDefault()
+    // In a real app, this would send the order data to an API
+    alert("Order placed successfully!")
+    setShowOrderForm(false)
+    setOrderData({
+      quantity: "",
+      deliveryAddress: "",
+      deliveryDate: ""
+    })
+  }
 
   if (loading) {
     return (
@@ -140,12 +175,74 @@ export default function ProductDetail() {
               <span className="text-lg">Available: {product.quantity}</span>
             </div>
             <p className="text-gray-600">{product.description}</p>
+
+            {showContactInfo && (
+              <div className="bg-gray-50 p-4 rounded-md">
+                <h3 className="font-medium mb-2">Farmer Contact Information</h3>
+                <p className="text-sm text-gray-600">Name: {product.farmer.name}</p>
+                <p className="text-sm text-gray-600">Email: {product.farmer.email}</p>
+                <p className="text-sm text-gray-600">Phone: {product.farmer.phone}</p>
+              </div>
+            )}
+
+            {showOrderForm && (
+              <form onSubmit={handleSubmitOrder} className="space-y-4 bg-gray-50 p-4 rounded-md">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">Quantity (kg)</label>
+                  <input
+                    type="number"
+                    name="quantity"
+                    value={orderData.quantity}
+                    onChange={handleInputChange}
+                    min="1"
+                    max={parseInt(product.quantity)}
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">Delivery Address</label>
+                  <input
+                    type="text"
+                    name="deliveryAddress"
+                    value={orderData.deliveryAddress}
+                    onChange={handleInputChange}
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">Delivery Date</label>
+                  <input
+                    type="date"
+                    name="deliveryDate"
+                    value={orderData.deliveryDate}
+                    onChange={handleInputChange}
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm"
+                    required
+                  />
+                </div>
+                <button
+                  type="submit"
+                  className="w-full px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700"
+                >
+                  Confirm Order
+                </button>
+              </form>
+            )}
+
             <div className="flex gap-4 pt-4">
-              <button className="flex-1 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">
-                Contact Farmer
+              <button 
+                className="flex-1 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700"
+                onClick={handleContactFarmer}
+              >
+                {showContactInfo ? 'Hide Contact' : 'Contact Farmer'}
               </button>
-              <button className="flex-1 px-4 py-2 border border-green-600 text-green-600 rounded-md hover:bg-green-50">
-                Place Order
+              <button 
+                className="flex-1 px-4 py-2 border border-green-600 text-green-600 rounded-md hover:bg-green-50"
+                onClick={handlePlaceOrder}
+              >
+                {showOrderForm ? 'Cancel Order' : 'Place Order'}
               </button>
             </div>
           </div>

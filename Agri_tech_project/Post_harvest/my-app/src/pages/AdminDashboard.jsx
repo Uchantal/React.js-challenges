@@ -1,13 +1,14 @@
 "use client"
 
 import { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { Users, Package, Warehouse, Truck, BarChart3, Settings } from "lucide-react"
 import { useAuth } from "../context/AuthContext"
 
 export default function AdminDashboard() {
   const { user } = useAuth()
   const [activeTab, setActiveTab] = useState("overview")
+  const navigate = useNavigate()
 
   // Mock data for admin dashboard
   const stats = {
@@ -25,6 +26,23 @@ export default function AdminDashboard() {
     { id: 4, name: "Alice Mukamana", email: "alice.mukamana@example.com", role: "farmer", date: "2025-01-12" },
     { id: 5, name: "Robert Mugisha", email: "robert.mugisha@example.com", role: "buyer", date: "2025-01-11" },
   ]
+
+  const handleAddNewUser = () => {
+    // In a real app, this would open a modal or navigate to a user creation form
+    navigate('/admin/users/new')
+  }
+
+  const handleAddNewProduct = () => {
+    navigate('/admin/products/new')
+  }
+
+  const handleManageStorageFacilities = () => {
+    navigate('/admin/storage-facilities')
+  }
+
+  const handleManageTransportServices = () => {
+    navigate('/admin/transport-services')
+  }
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -278,7 +296,12 @@ export default function AdminDashboard() {
         <div className="bg-white p-6 rounded-lg border border-gray-200 shadow">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-lg font-semibold">User Management</h2>
-            <button className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">Add New User</button>
+            <button 
+              className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700"
+              onClick={handleAddNewUser}
+            >
+              Add New User
+            </button>
           </div>
           <p className="text-gray-500 mb-4">
             This section would contain a full user management interface with filtering, pagination, and CRUD operations.
@@ -293,7 +316,12 @@ export default function AdminDashboard() {
         <div className="bg-white p-6 rounded-lg border border-gray-200 shadow">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-lg font-semibold">Product Management</h2>
-            <button className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">Add New Product</button>
+            <button 
+              className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700"
+              onClick={handleAddNewProduct}
+            >
+              Add New Product
+            </button>
           </div>
           <p className="text-gray-500 mb-4">
             This section would contain a full product management interface with filtering, pagination, and CRUD
@@ -310,10 +338,16 @@ export default function AdminDashboard() {
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-lg font-semibold">Service Management</h2>
             <div className="space-x-2">
-              <button className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+              <button 
+                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+                onClick={handleManageStorageFacilities}
+              >
                 Storage Facilities
               </button>
-              <button className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">
+              <button 
+                className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700"
+                onClick={handleManageTransportServices}
+              >
                 Transport Services
               </button>
             </div>

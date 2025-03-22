@@ -1,7 +1,41 @@
 import { Link } from "react-router-dom"
 import { MapPin, Weight } from "lucide-react"
+import { useState } from "react"
 
 export default function TransportCard({ service }) {
+  const [showBookingForm, setShowBookingForm] = useState(false)
+  const [bookingData, setBookingData] = useState({
+    pickupDate: "",
+    pickupLocation: "",
+    dropoffLocation: "",
+    cargoWeight: ""
+  })
+
+  const handleBookTransport = () => {
+    setShowBookingForm(!showBookingForm)
+  }
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target
+    setBookingData(prev => ({
+      ...prev,
+      [name]: value
+    }))
+  }
+
+  const handleSubmitBooking = (e) => {
+    e.preventDefault()
+    // In a real app, this would send the booking data to an API
+    alert("Transport booking request submitted successfully!")
+    setShowBookingForm(false)
+    setBookingData({
+      pickupDate: "",
+      pickupLocation: "",
+      dropoffLocation: "",
+      cargoWeight: ""
+    })
+  }
+
   return (
     <div className="overflow-hidden rounded-lg border border-gray-200 bg-white shadow">
       <div className="p-4">
@@ -46,6 +80,64 @@ export default function TransportCard({ service }) {
           </div>
         </div>
 
+        {showBookingForm && (
+          <form onSubmit={handleSubmitBooking} className="mt-4 space-y-3 border-t pt-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Pickup Date</label>
+              <input
+                type="date"
+                name="pickupDate"
+                value={bookingData.pickupDate}
+                onChange={handleInputChange}
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Pickup Location</label>
+              <input
+                type="text"
+                name="pickupLocation"
+                value={bookingData.pickupLocation}
+                onChange={handleInputChange}
+                placeholder="Enter pickup location"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Dropoff Location</label>
+              <input
+                type="text"
+                name="dropoffLocation"
+                value={bookingData.dropoffLocation}
+                onChange={handleInputChange}
+                placeholder="Enter dropoff location"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Cargo Weight (kg)</label>
+              <input
+                type="number"
+                name="cargoWeight"
+                value={bookingData.cargoWeight}
+                onChange={handleInputChange}
+                min="1"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm"
+                required
+              />
+            </div>
+            <button
+              type="submit"
+              className="w-full px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700"
+            >
+              Submit Booking
+            </button>
+          </form>
+        )}
+
         <div className="flex gap-2 mt-4">
           <Link
             to={`/transport/${service.id}`}
@@ -53,8 +145,11 @@ export default function TransportCard({ service }) {
           >
             View Details
           </Link>
-          <button className="flex-1 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">
-            Book Transport
+          <button 
+            className="flex-1 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700"
+            onClick={handleBookTransport}
+          >
+            {showBookingForm ? 'Cancel Booking' : 'Book Transport'}
           </button>
         </div>
       </div>
