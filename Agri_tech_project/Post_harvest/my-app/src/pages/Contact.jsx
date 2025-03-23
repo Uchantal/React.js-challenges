@@ -165,7 +165,7 @@ export default function Contact() {
                 <div>
                   <h3 className="font-semibold">Address</h3>
                   <p className="text-gray-600">
-                    KG 123 Street, Kigali Heights
+                    KG 501 St,Gasabo-Gisozi
                     <br />
                     Kigali, Rwanda
                   </p>
@@ -176,7 +176,7 @@ export default function Contact() {
                 <Phone className="h-6 w-6 text-green-600 mr-3 mt-0.5" />
                 <div>
                   <h3 className="font-semibold">Phone</h3>
-                  <p className="text-gray-600">+250 7XX XXX XXX</p>
+                  <p className="text-gray-600">+250 787467715</p>
                 </div>
               </div>
 

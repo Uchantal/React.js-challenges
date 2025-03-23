@@ -66,7 +66,7 @@ export default function Home() {
               </div>
               <h3 className="text-xl font-semibold mb-2">For Service Providers</h3>
               <p className="text-gray-600 mb-4">
-                Register your transport or storage services to help farmers reduce post-harvest losses.
+                Register your transport or storage services to help farmers reduce harvest losses.
               </p>
               <Link to="/register?type=service" className="text-green-600 font-medium flex items-center">
                 Register as Provider <ArrowRight className="ml-2 h-4 w-4" />
@@ -81,15 +81,15 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-3 gap-8 text-center">
             <div>
-              <h3 className="text-4xl font-bold mb-2">30%</h3>
+              <h3 className="text-4xl font-bold mb-2">20%</h3>
               <p className="text-lg">Post-harvest losses reduced</p>
             </div>
             <div>
               <h3 className="text-4xl font-bold mb-2">1000+</h3>
-              <p className="text-lg">Farmers connected to markets</p>
+              <p className="text-lg">Farmers connected to the markets</p>
             </div>
             <div>
-              <h3 className="text-4xl font-bold mb-2">500+</h3>
+              <h3 className="text-4xl font-bold mb-2">400+</h3>
               <p className="text-lg">Storage facilities available</p>
             </div>
           </div>
@@ -102,8 +102,8 @@ export default function Home() {
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-3xl font-bold mb-6">Our Mission</h2>
             <p className="text-lg text-gray-600 mb-8">
-              Our mission is to embrace technology in Rwanda's Agriculture sector by creating a connective platform to
-              help farmers meet with their relevant stakeholders and encourage them to adapt to modern Agriculture to
+              Our mission is to embrace technology in Rwanda's Agriculture sector through this  connective digital platform to
+              help farmers meet with their relevant stakeholders, encourage them to adapt to modern Agriculture to
               ensure food security in the Country and abroad.
             </p>
             <Link

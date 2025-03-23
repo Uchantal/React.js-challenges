@@ -15,7 +15,7 @@ export default function About() {
       <div className="text-center mb-16">
         <h1 className="text-4xl font-bold mb-4">About Post-Harvest Manager</h1>
         <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-          Connecting farmers with buyers, transporters, and storage facilities to reduce post-harvest losses and improve
+          Connecting farmers with buyers, transporters, and storage facilities to reduce harvest losses and improve
           market access in Rwanda.
         </p>
       </div>
@@ -25,8 +25,8 @@ export default function About() {
         <div>
           <h2 className="text-3xl font-bold mb-4">Our Mission</h2>
           <p className="text-gray-600 mb-4">
-            Our mission is to embrace technology in Rwanda's Agriculture sector by creating a connective platform to
-            help farmers meet with their relevant stakeholders and encourage them to adapt to modern Agriculture to
+            Our mission is to embrace technology in Rwanda's Agriculture sector through this digital platform that
+            help farmers meet with their relevant stakeholders, encourage them to adapt to modern Agriculture to
             ensure food security in the Country and abroad.
           </p>
           <p className="text-gray-600 mb-4">
@@ -86,7 +86,7 @@ export default function About() {
             </div>
             <h3 className="text-xl font-semibold mb-2">Connect & Negotiate</h3>
             <p className="text-gray-600">
-              Buyers browse available products and connect with farmers. Farmers can find suitable storage facilities
+              Buyers browse available products, view all necessary detailsif interested contact the Farmers. Farmers can find suitable storage facilities
               and transport services to ensure their products reach the market in good condition.
             </p>
           </div>
@@ -104,7 +104,8 @@ export default function About() {
       </div>
 
       {/* Team Section */}
-      <div className="mb-16">
+
+      {/* <div className="mb-16">
         <h2 className="text-3xl font-bold mb-8 text-center">Our Team</h2>
         <div className="grid md:grid-cols-4 gap-6">
           {teamMembers.map((member, index) => (
@@ -121,7 +122,7 @@ export default function About() {
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
 
       {/* Contact Section */}
       <div className="bg-gray-50 p-8 rounded-lg">

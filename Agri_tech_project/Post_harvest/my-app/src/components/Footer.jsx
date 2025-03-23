@@ -72,10 +72,10 @@ export default function Footer() {
           <div>
             <h3 className="text-lg font-semibold mb-4">Contact</h3>
             <address className="not-italic text-gray-400 space-y-2">
-              <p>KG 123 Street, Kigali Heights</p>
+              <p>KG 501 St, Gasabo-Gisozi</p>
               <p>Kigali, Rwanda</p>
               <p>Email: info@postharvest.rw</p>
-              <p>Phone: +250 7XX XXX XXX</p>
+              <p>Phone: +250 787467715</p>
             </address>
           </div>
         </div>
