@@ -103,28 +103,7 @@ export default function About() {
         </div>
       </div>
 
-      {/* Team Section */}
-
-      {/* <div className="mb-16">
-        <h2 className="text-3xl font-bold mb-8 text-center">Our Team</h2>
-        <div className="grid md:grid-cols-4 gap-6">
-          {teamMembers.map((member, index) => (
-            <div key={index} className="text-center">
-              <div className="relative w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden bg-gray-200">
-                <img
-                  src="/placeholder.svg?height=128&width=128"
-                  alt={`${member.name} - ${member.role}`}
-                  className="object-cover w-full h-full"
-                />
-              </div>
-              <h3 className="text-lg font-semibold">{member.name}</h3>
-              <p className="text-gray-500">{member.role}</p>
-            </div>
-          ))}
-        </div>
-      </div> */}
-
-      {/* Contact Section */}
+       {/* Contact Section */}
       <div className="bg-gray-50 p-8 rounded-lg">
         <div className="text-center mb-8">
           <h2 className="text-3xl font-bold mb-4">Get In Touch</h2>
